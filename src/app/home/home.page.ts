@@ -1,5 +1,7 @@
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Component } from '@angular/core';
 import { ToastController } from '@ionic/angular';
+import { Button } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-home',
@@ -77,16 +79,20 @@ export class HomePage {
   public chosenAnimal = null;
 
   //Le temps maxi pour la reponse
-  private answerDelaySecound = 30;
+  private answerDelaySecound = 7;
 
   //Le temps restant pour une reponse
   public secoundLeft = null;
 //le chrono pour les reponses
 private timer = null;
-
-
+//le jeu annonce gameover au bout de 3 essai
+public gameOver = 3;
   //stockage audio html objet qui sait lire un son
   private audio: HTMLAudioElement = null;
+  //nombre de coups
+  public tries = 0;
+private maxTries = 3;
+
   constructor(private toastCtrl: ToastController) { }
 
   public play() {
@@ -119,6 +125,10 @@ private timer = null;
     let message;
     let toastColor = 'danger'
 
+    if(this.tries > this.maxTries) {
+      message
+    }
+
     //comparaison des animaux
     //celui sur lequel le joueur a cliqué
     //et ce lui dont on a joué le son
@@ -147,7 +157,12 @@ toast.present();
     //arrete le chrono lorsque la reponse et bonne
     this.secoundLeft = 0;
     clearInterval(this.timer);
+    
+//On arrête le jeu au bout de 3 tentatives le joueur et averti 
+ //par un message 
 
+this.gameOver = this.gameOver
+  
   }
 private startTimer(){
   this.secoundLeft = this.answerDelaySecound;
